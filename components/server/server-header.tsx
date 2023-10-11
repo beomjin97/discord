@@ -41,9 +41,9 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 text-xs font-medium text-black dark:text-neutral-400 space-y-[2px]">
         {isModerator && (
-          <DropdownMenuItem 
-          className="px-3 py-2 text-sm text-indigo-600 cursor-pointer dark:text-indigo-400"
-          onClick={() => onOpen('invite', {server})}
+          <DropdownMenuItem
+            className="px-3 py-2 text-sm text-indigo-600 cursor-pointer dark:text-indigo-400"
+            onClick={() => onOpen("invite", { server })}
           >
             Invite People
             <UserPlus className="w-4 h-4 ml-auto" />
@@ -51,11 +51,17 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
         )}
         {isAdmin && (
           <>
-            <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">
+            <DropdownMenuItem
+              onClick={() => onOpen("editServer", { server })}
+              className="px-3 py-2 text-sm cursor-pointer"
+            >
               Server Settings
               <Settings className="w-4 h-4 ml-auto" />
             </DropdownMenuItem>
-            <DropdownMenuItem className="px-3 py-2 text-sm cursor-pointer">
+            <DropdownMenuItem
+              onClick={() => onOpen("members", { server })}
+              className="px-3 py-2 text-sm cursor-pointer"
+            >
               Manage Members
               <Users className="w-4 h-4 ml-auto" />
             </DropdownMenuItem>
