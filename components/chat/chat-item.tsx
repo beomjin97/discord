@@ -15,6 +15,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useModal } from "@/hooks/use-modal-store";
+import { useParams, useRouter } from "next/navigation";
 
 interface ChatItemProps {
   id: string;
@@ -56,6 +57,15 @@ export const ChatItem = ({
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const { onOpen } = useModal();
+  const params = useParams();
+  const router = useRouter();
+
+  const onMemberClick = () => {
+    if (member.id === currentMember.id) {
+      return;
+    }
+    router.push(`/servers/${params?.serverId}/conversation/${member.id}`);
+  };
 
   const fileType = fileUrl?.split(".").pop();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -110,7 +120,10 @@ export const ChatItem = ({
   return (
     <div className="relative flex items-center w-full p-4 transition group hover:bg-black/5">
       <div className="flex items-start w-full group gap-x-2">
-        <div className="transition cursor-pointer hover:drop-shadow-md">
+        <div
+          onClick={onMemberClick}
+          className="transition cursor-pointer hover:drop-shadow-md"
+        >
           <UserAvatar src={member.profile.imageUrl} />
         </div>
         <div className="flex flex-col w-full">

@@ -8,6 +8,7 @@ import { Fragment } from "react";
 import { ChatItem } from "./chat-item";
 
 import { format } from "date-fns";
+import { useChatSocket } from "@/hooks/use-chat-socket";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
@@ -41,8 +42,12 @@ export const ChatMessage = ({
   type,
 }: ChatMessageProps) => {
   const queryKey = `chat:${chatId}`;
+  const addKey = `chat:${chatId}:messages`;
+  const updateKey = `chat:${chatId}:messages:update`;
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useChatQuery({ queryKey, apiUrl, paramKey, paramValue });
+  useChatSocket({ queryKey, addKey, updateKey });
 
   if (status === "loading") {
     return (
@@ -65,7 +70,7 @@ export const ChatMessage = ({
       </div>
     );
   }
-
+  console.log(data?.pages);
   return (
     <div className="flex flex-col flex-1 py-4 overflow-y-auto">
       <div className="flex-1" />
